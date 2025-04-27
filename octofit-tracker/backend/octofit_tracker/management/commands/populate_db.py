@@ -36,13 +36,13 @@ class Command(BaseCommand):
 
         # Assign users to activities and leaderboard
         for i, activity in enumerate(activities_to_insert):
-            activity['user'] = user_ids[i]
+            activity['user'] = user_ids[i % len(user_ids)]  # Avoid IndexError if more activities than users
             if isinstance(activity['duration'], timedelta):
                 activity['duration'] = int(activity['duration'].total_seconds())
         db.activities.insert_many(activities_to_insert)
 
         for i, entry in enumerate(leaderboard_to_insert):
-            entry['user'] = user_ids[i]
+            entry['user'] = user_ids[i % len(user_ids)]  # Avoid IndexError if more leaderboard entries than users
         db.leaderboard.insert_many(leaderboard_to_insert)
 
         db.workouts.insert_many(workouts_to_insert)
