@@ -32,6 +32,9 @@ class Command(BaseCommand):
         user_ids = [user['_id'] for user in users_to_insert]
         for team in teams_to_insert:
             team['members'] = user_ids
+        # Insert teams (add team_id for compatibility with some schemas)
+        for i, team in enumerate(teams_to_insert):
+            team['team_id'] = i + 1
         db.teams.insert_many(teams_to_insert)
 
         # Assign users to activities and leaderboard
@@ -44,7 +47,10 @@ class Command(BaseCommand):
 
         for i, entry in enumerate(leaderboard_to_insert):
             entry['user'] = user_ids[i % len(user_ids)]
+            entry['leaderboard_id'] = i + 1  # Add unique leaderboard_id for each entry
         db.leaderboard.insert_many(leaderboard_to_insert)
 
+        for i, workout in enumerate(workouts_to_insert):
+            workout['workout_id'] = i + 1  # Add unique workout_id for each workout
         db.workouts.insert_many(workouts_to_insert)
         self.stdout.write(self.style.SUCCESS('Successfully populated octofit_db with test data using PyMongo.'))
