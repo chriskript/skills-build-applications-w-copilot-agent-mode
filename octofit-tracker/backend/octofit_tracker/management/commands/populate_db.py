@@ -19,25 +19,31 @@ class Command(BaseCommand):
         db.leaderboard.drop()
         db.workouts.drop()
 
-        # Insert users
-        db.users.insert_many(TEST_USERS)
+        # Insert users (deepcopy to avoid mutation issues)
+        import copy
+        users_to_insert = copy.deepcopy(TEST_USERS)
+        teams_to_insert = copy.deepcopy(TEST_TEAMS)
+        activities_to_insert = copy.deepcopy(TEST_ACTIVITIES)
+        leaderboard_to_insert = copy.deepcopy(TEST_LEADERBOARD)
+        workouts_to_insert = copy.deepcopy(TEST_WORKOUTS)
+        db.users.insert_many(users_to_insert)
 
         # Assign user ObjectIds to teams, activities, leaderboard
-        user_ids = [user['_id'] for user in TEST_USERS]
-        for team in TEST_TEAMS:
+        user_ids = [user['_id'] for user in users_to_insert]
+        for team in teams_to_insert:
             team['members'] = user_ids
-        db.teams.insert_many(TEST_TEAMS)
+        db.teams.insert_many(teams_to_insert)
 
         # Assign users to activities and leaderboard
-        for i, activity in enumerate(TEST_ACTIVITIES):
+        for i, activity in enumerate(activities_to_insert):
             activity['user'] = user_ids[i]
             if isinstance(activity['duration'], timedelta):
                 activity['duration'] = int(activity['duration'].total_seconds())
-        db.activities.insert_many(TEST_ACTIVITIES)
+        db.activities.insert_many(activities_to_insert)
 
-        for i, entry in enumerate(TEST_LEADERBOARD):
+        for i, entry in enumerate(leaderboard_to_insert):
             entry['user'] = user_ids[i]
-        db.leaderboard.insert_many(TEST_LEADERBOARD)
+        db.leaderboard.insert_many(leaderboard_to_insert)
 
-        db.workouts.insert_many(TEST_WORKOUTS)
+        db.workouts.insert_many(workouts_to_insert)
         self.stdout.write(self.style.SUCCESS('Successfully populated octofit_db with test data using PyMongo.'))
