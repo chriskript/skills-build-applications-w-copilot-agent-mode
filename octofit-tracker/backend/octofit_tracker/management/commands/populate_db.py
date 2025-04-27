@@ -12,10 +12,10 @@ class Command(BaseCommand):
         client = MongoClient(settings.DATABASES['default']['HOST'], settings.DATABASES['default']['PORT'])
         db = client[settings.DATABASES['default']['NAME']]
 
-        # Drop existing collections
+        # Drop existing collections (use singular names to match expected schema)
         db.users.drop()
         db.teams.drop()
-        db.activities.drop()
+        db.activity.drop()
         db.leaderboard.drop()
         db.workouts.drop()
 
