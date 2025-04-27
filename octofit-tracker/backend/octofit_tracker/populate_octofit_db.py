@@ -1,8 +1,11 @@
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 # Script to populate octofit_db with test data for users, teams, activities, leaderboard, and workouts
 from pymongo import MongoClient
 from bson import ObjectId
 from datetime import timedelta
-from octofit_tracker.test_data import test_users, test_teams, test_activities, test_leaderboard, test_workouts
+from test_data import test_users, test_teams, test_activities, test_leaderboard, test_workouts
 
 # Connect to MongoDB
 client = MongoClient('localhost', 27017)
@@ -29,6 +32,11 @@ for i, activity in enumerate(test_activities):
     activity['user'] = user_ids[i]
 for i, entry in enumerate(test_leaderboard):
     entry['user'] = user_ids[i]
+
+# Convert timedelta to seconds for MongoDB compatibility
+for activity in test_activities:
+    if isinstance(activity["duration"], timedelta):
+        activity["duration"] = int(activity["duration"].total_seconds())
 
 db['activities'].insert_many(test_activities)
 db['leaderboard'].insert_many(test_leaderboard)
