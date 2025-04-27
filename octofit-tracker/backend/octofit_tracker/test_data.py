@@ -40,3 +40,10 @@ test_workouts = [
     {"_id": ObjectId(), "name": "Strength Training", "description": "Training for strength"},
     {"_id": ObjectId(), "name": "Swimming Training", "description": "Training for a swimming competition"},
 ]
+
+# Export test data with names expected by populate_db.py
+TEST_USERS = test_users
+TEST_TEAMS = test_teams
+TEST_ACTIVITIES = test_activities
+TEST_LEADERBOARD = test_leaderboard
+TEST_WORKOUTS = test_workouts
