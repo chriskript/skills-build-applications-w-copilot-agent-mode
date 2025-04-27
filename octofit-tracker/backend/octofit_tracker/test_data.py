@@ -1,28 +1,42 @@
-# Test data for OctoFit Tracker, adapted from MonaFit Tracker
-TEST_USERS = [
-    {"username": "alice", "email": "alice@example.com", "password": "alicepass"},
-    {"username": "bob", "email": "bob@example.com", "password": "bobpass"},
-    {"username": "carol", "email": "carol@example.com", "password": "carolpass"}
+# Test data for OctoFit Tracker (Merington High School)
+# This file provides test data for users, teams, activities, leaderboard, and workouts collections.
+
+from bson import ObjectId
+from datetime import timedelta
+
+test_users = [
+    {"_id": ObjectId(), "username": "thundergod", "email": "thundergod@mhigh.edu", "password": "thundergodpassword"},
+    {"_id": ObjectId(), "username": "metalgeek", "email": "metalgeek@mhigh.edu", "password": "metalgeekpassword"},
+    {"_id": ObjectId(), "username": "zerocool", "email": "zerocool@mhigh.edu", "password": "zerocoolpassword"},
+    {"_id": ObjectId(), "username": "crashoverride", "email": "crashoverride@hmhigh.edu", "password": "crashoverridepassword"},
+    {"_id": ObjectId(), "username": "sleeptoken", "email": "sleeptoken@mhigh.edu", "password": "sleeptokenpassword"},
 ]
 
-TEST_TEAMS = [
-    {"name": "Team Octopus", "members": ["alice", "bob"]},
-    {"name": "Team Kraken", "members": ["carol"]}
+test_teams = [
+    {"_id": ObjectId(), "name": "Blue Team", "members": []},
+    {"_id": ObjectId(), "name": "Gold Team", "members": []},
 ]
 
-TEST_ACTIVITIES = [
-    {"user": "alice", "activity_type": "Running", "duration": 3600},
-    {"user": "bob", "activity_type": "Walking", "duration": 1800},
-    {"user": "carol", "activity_type": "Cycling", "duration": 5400}
+test_activities = [
+    {"_id": ObjectId(), "user": None, "activity_type": "Cycling", "duration": timedelta(hours=1)},
+    {"_id": ObjectId(), "user": None, "activity_type": "Crossfit", "duration": timedelta(hours=2)},
+    {"_id": ObjectId(), "user": None, "activity_type": "Running", "duration": timedelta(hours=1, minutes=30)},
+    {"_id": ObjectId(), "user": None, "activity_type": "Strength", "duration": timedelta(minutes=30)},
+    {"_id": ObjectId(), "user": None, "activity_type": "Swimming", "duration": timedelta(hours=1, minutes=15)},
 ]
 
-TEST_LEADERBOARD = [
-    {"user": "alice", "score": 120},
-    {"user": "bob", "score": 80},
-    {"user": "carol", "score": 150}
+test_leaderboard = [
+    {"_id": ObjectId(), "user": None, "score": 100},
+    {"_id": ObjectId(), "user": None, "score": 90},
+    {"_id": ObjectId(), "user": None, "score": 95},
+    {"_id": ObjectId(), "user": None, "score": 85},
+    {"_id": ObjectId(), "user": None, "score": 80},
 ]
 
-TEST_WORKOUTS = [
-    {"name": "Morning Cardio", "description": "30 minutes of running and jumping jacks."},
-    {"name": "Strength Circuit", "description": "Push-ups, squats, and planks."}
+test_workouts = [
+    {"_id": ObjectId(), "name": "Cycling Training", "description": "Training for a road cycling event"},
+    {"_id": ObjectId(), "name": "Crossfit", "description": "Training for a crossfit competition"},
+    {"_id": ObjectId(), "name": "Running Training", "description": "Training for a marathon"},
+    {"_id": ObjectId(), "name": "Strength Training", "description": "Training for strength"},
+    {"_id": ObjectId(), "name": "Swimming Training", "description": "Training for a swimming competition"},
 ]
